@@ -1,0 +1,8 @@
+.*/
+*.csv
+*.pdf
+data/
+__pycache__/
+.venv/
+mozilla-central/
+.DS_Store

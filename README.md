@@ -41,9 +41,13 @@ python balance_data.py
 
 Downsamples the majority class (buggy) to match the minority class (clean), producing a balanced dataset. Outputs `data/balanced_commits.csv`.
 
-### Step 4: Feature extraction (future)
+### Step 4: Feature extraction
 
-TODO
+```bash
+python run_feature_extraction.py
+```
+
+Extracts 10 numeric features (title/body length, capitalization, imperative mood, external references, filenames, commit hashes) and a TF-RF sparse matrix from commit messages. Outputs `data/features.csv`, `data/tfrf_matrix.npz`, and `data/tfrf_vectorizer.joblib`.
 
 ### Step 5: Model training (future)
 

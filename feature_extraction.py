@@ -60,7 +60,7 @@ def count_commit_hashes(text: str) -> int:
     return len(RE_COMMIT_HASH.findall(text))
 
 
-def extract_commit_features(df: pd.DataFrame):
+def extract_commit_features(df: pd.DataFrame, return_vectorizer: bool = False):
     result = df.copy()
     summary = result['summary'].fillna("")
     body    = result['body'].fillna("")
@@ -91,4 +91,6 @@ def extract_commit_features(df: pd.DataFrame):
 
     #result = pd.concat([result, tfrf_df], axis=1) #could return one dataframe insteda of two 
 
+    if return_vectorizer:
+        return result, tfrf_df, tfrf_vectorizer, tfrf_matrix
     return result, tfrf_df

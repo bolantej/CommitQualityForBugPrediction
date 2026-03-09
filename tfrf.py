@@ -27,8 +27,8 @@ class TFRFTransformer(TfidfTransformer):
 
         #if using tf-rf
         if self.use_rf:
-            pos_mask = y == 1
-            neg_mask = y == 0
+            pos_mask = np.asarray(y == 1)
+            neg_mask = np.asarray(y == 0)
             X_pos = X[pos_mask]
             X_neg = X[neg_mask]
 

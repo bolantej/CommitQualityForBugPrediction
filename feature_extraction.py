@@ -81,15 +81,15 @@ def extract_commit_features(df: pd.DataFrame, return_vectorizer: bool = False):
     result["filenames_title"]   = summary.apply(count_filenames)
     result["filenames_body"]    = body.apply(count_filenames)
 
+    
 
-
-    tfrf_vectorizer = TFRFVectorizer()
+    tfrf_vectorizer = TFRFVectorizer(ngram_range=(1,2), lowercase=True,          # handles lowercasing
+    strip_accents="unicode", # normalizes accents
+    token_pattern=r"\b[a-zA-Z]\w+\b",)
     tfrf_matrix = tfrf_vectorizer.fit_transform(summary, labels) #could be changed from summary to body (or used on a combined summary/body)
 
-    #vocab      = tfrf_vectorizer.get_feature_names_out()
     tfrf_df    = pd.DataFrame.sparse.from_spmatrix(tfrf_matrix, index=result.index)
 
-    #result = pd.concat([result, tfrf_df], axis=1) #could return one dataframe insteda of two 
 
     if return_vectorizer:
         return result, tfrf_df, tfrf_vectorizer, tfrf_matrix

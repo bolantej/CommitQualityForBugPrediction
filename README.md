@@ -51,7 +51,11 @@ Extracts 10 numeric features (title/body length, capitalization, imperative mood
 
 ### Step 5: Model training (future)
 
-TODO
+```bash
+python train_model.py
+```
+
+Trains a linear SVM on the combined numeric features and TF-RF matrix. Prints an accuracy table, confusion matrix, and some of the coefficient weights
 
 
 ## Data

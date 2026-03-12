@@ -49,7 +49,7 @@ python run_feature_extraction.py
 
 Extracts 10 numeric features (title/body length, capitalization, imperative mood, external references, filenames, commit hashes) and a TF-RF sparse matrix from commit messages. Outputs `data/features.csv`, `data/tfrf_matrix.npz`, and `data/tfrf_vectorizer.joblib`.
 
-### Step 5: Model training (future)
+### Step 5: Model training
 
 ```bash
 python train_model.py

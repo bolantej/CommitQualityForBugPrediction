@@ -3,8 +3,8 @@
 ## Prerequisites
 
 - Python 3.11+
-- Mercurial (`brew install mercurial`) OR <insert windows command>
-- A local clone of mozilla-central (`hg clone https://hg.mozilla.org/mozilla-central ./mozilla-central`)
+- Git
+- Local copy of the Bug Hunter dataset - https://data.mendeley.com/datasets/8tx7kjbkg4/2
 
 ## Setup
 
@@ -14,16 +14,17 @@ source .venv/bin/activate
 pip install -r requirements.txt
 python -m spacy download en_core_web_sm
 ```
+Next, download and extract the BugHunter dataset from mendeley data. The collect_data.py script is looking for a file called "file.csv" in the root of the project. Our results were done using the full/all/file.csv data.
 
 ## Usage
 
 ### Step 1: Collect raw commit data
 
 ```bash
-python collect_data.py --hg-repo ./mozilla-central
+python collect_data.py
 ```
 
-Downloads Mozilla's regressors-regressions dataset, extracts bug-introducing commit messages from the local hg repo, and samples an equal number of non-buggy commits. Outputs `data/raw_commits.csv`.
+Downloads git repository for each project in the BugHunters dataset, extracts bug-introducing commit messages from the git log, and labels the commits using the data in file.csv.
 
 ### Step 2: Filter commits
 
@@ -60,7 +61,7 @@ Trains a linear SVM on the combined numeric features and TF-RF matrix. Prints an
 
 ## Data
 
-- **Source**: [Mozilla regressors-regressions dataset](https://github.com/mozilla/regressors-regressions-dataset)
+- **Source**: [BugHunter Dataset](https://data.mendeley.com/datasets/8tx7kjbkg4/2)
 - **`data/raw_commits.csv`**: All collected commits with columns: `commit_id, summary, body, author, parents, label`
 - **`data/filtered_commits.csv`**: Cleaned commits after removing noise
 - **`data/balanced_commits.csv`**: Balanced dataset with equal buggy/clean counts

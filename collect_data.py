@@ -87,14 +87,6 @@ def collect_commit_data(project: dict, base_dir: str = "git_repos") -> list[dict
 
 
 def main():
-    # parser = argparse.ArgumentParser(
-    #     description="Collect commit data for bug prediction"
-    # )
-    # parser.add_argument(
-    #     "--seed", type=int, default=42, help="Random seed for sampling (default: 42)"
-    # )
-    # args = parser.parse_args()
-
     project_urls = [
         {
             "project_name": "Android-Universal-Image-Loader",
@@ -156,20 +148,20 @@ def main():
 
     df = load_csv("file.csv")
     buggy = df[df["Number of Bugs"] > 0]
-    # counts = buggy.groupby("Project")["Hash"].nunique()
-    # print(counts)
-    # print(f"Buggy commits {counts.sum()}")
 
     output_path = "data/raw_commits.csv"
     output_exists = os.path.exists(output_path)
 
     rows = pd.DataFrame()
 
+    bug_set: set[str] = set(buggy["Hash"])
+
     if not output_exists:
         r = []
         for proj in project_urls:
             data = collect_commit_data(proj, "git_repos")
             r.extend(data)
+            break
 
         rows = pd.DataFrame(
             r, columns=["commit_id", "summary", "body", "author", "date", "parents"]
@@ -189,13 +181,6 @@ def main():
                 "label",
             ],
         )
-
-    bug_set: set[str] = set(buggy["Hash"])
-
-    print(rows[rows["label"] == 1].count())
-    print(rows.count())
-    # label = 1 if row["commit_id"] in buggy["Hash"] else 0
-    # print(label)
 
 
 if __name__ == "__main__":
